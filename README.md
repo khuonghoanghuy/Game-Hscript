@@ -1,2 +1,2 @@
 # Game Hscript - A funny game script engine made for hscript
-wanna making a game but don't like to messing the source? well, this engine is for u, a game engine using `SScript` with haxe code to make game more easier!
+wanna making a game but don't like to messing the source? well, this engine is for u, a game engine using `hscript` with haxe code to make game more easier!

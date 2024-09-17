@@ -12,15 +12,16 @@ class PlayState extends FlxState
 	{
 		super();
 		instance = this;
-		Paths.getAllScripts("assets/data");
 		callOnScripts("onNew", []);
 	}
 
 	override public function create()
 	{
+		Paths.getAllScripts("assets/data/");
 		callOnScripts("onCreate", []);
 		super.create();
 		callOnScripts("onCreatePost", []);
+		Paths.getAllScripts("assets/data/");
 	}
 
 	override public function update(elapsed:Float)
@@ -60,7 +61,7 @@ class PlayState extends FlxState
 
 		for (i in 0...ayoScripts.length)
 		{
-			final call:Dynamic = ayoScripts[i].executeFunction(funcName, args);
+			final call:Dynamic = ayoScripts[i].executeFunc(funcName, args);
 			final bool:Bool = call == GameScript.Function_Continue;
 			if (!bool && call != null)
 				value = call;
