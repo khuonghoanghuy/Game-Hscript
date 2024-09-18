@@ -21,7 +21,7 @@ class PlayState extends FlxState
 		callOnScripts("onCreate", []);
 		super.create();
 		callOnScripts("onCreatePost", []);
-		Paths.getAllScripts("assets/data/");
+		// Paths.getAllScripts("assets/data/");
 	}
 
 	override public function update(elapsed:Float)
