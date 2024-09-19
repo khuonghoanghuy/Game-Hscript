@@ -7,6 +7,7 @@ class PlayState extends FlxState
 {
 	static public var ayoScripts:Array<GameScript> = [];
 	static public var instance:PlayState = null;
+	var storeCode:Map<String, Dynamic> = [];
 
 	public function new()
 	{
@@ -22,6 +23,8 @@ class PlayState extends FlxState
 		super.create();
 		callOnScripts("onCreatePost", []);
 		// Paths.getAllScripts("assets/data/");
+		// storeCode.set("enableThing", function() {});
+		trace(storeCode.toString());
 	}
 
 	override public function update(elapsed:Float)
@@ -39,6 +42,16 @@ class PlayState extends FlxState
 	}
 
 	// custom function
+	public function getCode(name:String)
+	{
+		return storeCode.get(name);
+	}
+
+	public function setCode(name:String, code:Dynamic)
+	{
+		return storeCode.set(name, code);
+	}
+
 	public function addMulti(basic:Array<FlxBasic>)
 	{
 		for (bsc in basic)

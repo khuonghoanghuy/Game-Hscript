@@ -29,7 +29,7 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<source path="source" />
-	<assets path="assets" />
+	<assets path="assets" embed="false" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 

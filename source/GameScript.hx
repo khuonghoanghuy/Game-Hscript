@@ -28,6 +28,9 @@ class GameScript extends FlxBasic
 		setVariable("FlxEase", FlxEase);
 		setVariable("Paths", Paths);
 
+		setVariable("setCode", PlayState.instance.setCode);
+		setVariable("getCode", PlayState.instance.getCode);
+
 		setVariable("quickKey", QuickKey.instance);
 		setVariable("quickChange", QuickChange.instance);
 		setVariable("game", PlayState.instance);

@@ -1,0 +1,5 @@
+function onCreate() {
+    var firstThing = new FlxText(0, 0, 0, "Hi", 32);
+    var secondThing = new FlxText(0, 30, 0, "Hello", 32);
+    addMulti([firstThing, secondThing]);
+}
