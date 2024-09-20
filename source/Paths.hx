@@ -26,34 +26,52 @@ class Paths
 			}
 		}
 	}
+	public static function getFile(key:String, defaultFolders:String = "assets/")
+	{
+		if (key != null)
+		{
+			if (FileSystem.exists(key))
+			{
+				return key;
+			}
+		}
+		return defaultFolders + key;
+	}
+
 	inline public static function getImage(key:String):FlxGraphic
 	{
-		var graphic:FlxGraphic = returnGraphic(key);
-		return graphic;
+		/*var graphic:FlxGraphic = returnGraphic(key);
+			return graphic; */
+		returnGraphic(key);
+		var graphical = FlxG.bitmap.get(key);
+		return graphical;
 	}
 
 	public static function returnGraphic(path:String, folders:String = "assets/images/"):FlxGraphic
 	{
-		trace(currentTrackerAssets.toString());
-		var folderToRead = FileSystem.readDirectory(folders + path + ".png");
-		for (file in folderToRead)
-			{
-			var imagePath = Path.join([folders, file]);
-			var bitmapData:BitmapData = BitmapData.fromFile(imagePath);
-			if (bitmapData != null)
-			{
-				var graphic = FlxGraphic.fromBitmapData(bitmapData);
-				currentTrackerAssets.set(imagePath, graphic);
-				return currentTrackerAssets.get(imagePath);
-			}
-		}
-		// If the image is embedded, try to load it using the original method
-		var graphic = FlxGraphic.fromAssetKey(path);
-		if (graphic != null)
+		trace("Images return: " + currentTrackerAssets.toString());
+
+		try
 		{
-			currentTrackerAssets.set(path, graphic);
-			return currentTrackerAssets.get(path);
+			var readToPath = getFile(path, folders);
+			if (FileSystem.exists(readToPath))
+			{
+				if (!currentTrackerAssets.exists(readToPath))
+				{
+					var bitmap = BitmapData.fromFile(readToPath);
+					var graphic = FlxGraphic.fromBitmapData(bitmap);
+					graphic.persist = true;
+					FlxG.bitmap.add(graphic);
+					currentTrackerAssets.set(readToPath, graphic);
+				}
+				return FlxG.bitmap.get(readToPath);
+			}
+			return null;
 		}
-		return null;
+		catch (e)
+		{
+			trace(e.message);
+			return null;
+		}
 	}
 }
