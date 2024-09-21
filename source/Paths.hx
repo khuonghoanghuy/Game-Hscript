@@ -38,35 +38,32 @@ class Paths
 		return defaultFolders + key;
 	}
 
-	inline public static function getImage(key:String):FlxGraphic
+	public static function image(path:String, folders:String = "assets/images/"):FlxGraphic
 	{
-		/*var graphic:FlxGraphic = returnGraphic(key);
-			return graphic; */
-		returnGraphic(key);
-		var graphical = FlxG.bitmap.get(key);
-		return graphical;
-	}
-
-	public static function returnGraphic(path:String, folders:String = "assets/images/"):FlxGraphic
-	{
-		trace("Images return: " + currentTrackerAssets.toString());
+		var fileKey:String = folders + path;
+		if (!fileKey.endsWith(".png"))
+		{
+			fileKey = folders + path + ".png";
+		}
+		else
+		{
+			fileKey = folders + path;
+		}
 
 		try
 		{
-			var readToPath = getFile(path, folders);
-			if (FileSystem.exists(readToPath))
+			if (FileSystem.exists(fileKey))
 			{
-				if (!currentTrackerAssets.exists(readToPath))
+				if (!currentTrackerAssets.exists(fileKey))
 				{
-					var bitmap = BitmapData.fromFile(readToPath);
+					var bitmap = BitmapData.fromFile(fileKey);
 					var graphic = FlxGraphic.fromBitmapData(bitmap);
 					graphic.persist = true;
-					FlxG.bitmap.add(graphic);
-					currentTrackerAssets.set(readToPath, graphic);
+					currentTrackerAssets.set(fileKey, graphic);
 				}
-				return FlxG.bitmap.get(readToPath);
+				return currentTrackerAssets.get(fileKey);
 			}
-			return null;
+			return currentTrackerAssets.get(fileKey);
 		}
 		catch (e)
 		{
