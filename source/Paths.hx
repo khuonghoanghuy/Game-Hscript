@@ -1,18 +1,18 @@
 package;
 
-import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import haxe.io.Path;
 import openfl.Assets;
-import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.media.Sound;
 import sys.FileSystem;
 
 using StringTools;
 
 class Paths
 {
-	public static var currentTrackerAssets:Map<String, FlxGraphic> = [];
+	public static var currentTrackerGraphic:Map<String, FlxGraphic> = [];
+	public static var currentTrackerSounds:Map<String, Sound> = [];
 
 	inline public static function getAllScripts(folders:String = "data", ?extension:String = ".hxs")
 	{
@@ -54,16 +54,47 @@ class Paths
 		{
 			if (FileSystem.exists(fileKey))
 			{
-				if (!currentTrackerAssets.exists(fileKey))
+				if (!currentTrackerGraphic.exists(fileKey))
 				{
 					var bitmap = BitmapData.fromFile(fileKey);
 					var graphic = FlxGraphic.fromBitmapData(bitmap);
 					graphic.persist = true;
-					currentTrackerAssets.set(fileKey, graphic);
+					currentTrackerGraphic.set(fileKey, graphic);
 				}
-				return currentTrackerAssets.get(fileKey);
+				return currentTrackerGraphic.get(fileKey);
 			}
-			return currentTrackerAssets.get(fileKey);
+			return currentTrackerGraphic.get(fileKey);
+		}
+		catch (e)
+		{
+			trace(e.message);
+			return null;
+		}
+	}
+
+	public static function sounds(path:String, folders:String = "assets/sounds/"):Sound
+	{
+		var fileKey:String = folders + path;
+		if (!fileKey.endsWith(".ogg"))
+		{
+			fileKey = folders + path + ".ogg";
+		}
+		else
+		{
+			fileKey = folders + path;
+		}
+
+		try
+		{
+			if (FileSystem.exists(fileKey))
+			{
+				if (!currentTrackerSounds.exists(fileKey))
+				{
+					currentTrackerSounds.set(fileKey, Sound.fromFile(fileKey));
+				}
+				return currentTrackerSounds.get(fileKey);
+			}
+			return currentTrackerSounds.get(fileKey);
 		}
 		catch (e)
 		{

@@ -53,7 +53,7 @@ class GameScript extends FlxBasic
 		catch (e:Dynamic)
 		{
 			#if hl
-			trace("execute error!\n" + e);
+			trace("File name" + file + " - execute error!\n" + e);
 			#else
 			Lib.application.window.alert(e, 'Hscript Error!');
 			#end
@@ -77,7 +77,7 @@ class GameScript extends FlxBasic
 		catch (e:Dynamic)
 		{
 			#if hl
-			trace("set variable rror!\n" + e);
+			trace("set variable error!\n" + e);
 			#else
 			Lib.application.window.alert(e, 'Hscript Error!');
 			#end

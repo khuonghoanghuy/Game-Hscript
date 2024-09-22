@@ -88,5 +88,5 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
-	<haxedef name="hscriptPos" />
+	<define name="hscriptPos" />
 </project>

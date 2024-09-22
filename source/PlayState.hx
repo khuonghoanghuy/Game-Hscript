@@ -1,7 +1,9 @@
 package;
 
 import flixel.FlxBasic;
+import flixel.FlxG;
 import flixel.FlxState;
+import flixel.sound.FlxSound;
 
 class PlayState extends FlxState
 {
@@ -42,6 +44,16 @@ class PlayState extends FlxState
 	}
 
 	// custom function
+	public function playSound(name:String, outLoud:Float = 1, looped:Bool = false):FlxSound
+	{
+		return FlxG.sound.play(Paths.sounds(name), outLoud, looped);
+	}
+
+	public function playMusic(name:String, outLoud:Float = 1, looped:Bool = false)
+	{
+		return FlxG.sound.playMusic(Paths.sounds(name, "assets/music/"), outLoud, looped);
+	}
+
 	public function getCode(name:String)
 	{
 		return storeCode.get(name);
