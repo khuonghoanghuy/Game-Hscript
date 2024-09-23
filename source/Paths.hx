@@ -1,11 +1,13 @@
 package;
 
 import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
 import haxe.io.Path;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
 import sys.FileSystem;
+import sys.io.File;
 
 using StringTools;
 
@@ -13,6 +15,15 @@ class Paths
 {
 	public static var currentTrackerGraphic:Map<String, FlxGraphic> = [];
 	public static var currentTrackerSounds:Map<String, Sound> = [];
+	public static var currentTrackerFile:Map<String, String> = [];
+	inline public static final DEFAULT_FOLDER:String = 'assets';
+
+	static public function getPath(folder:Null<String>, file:String)
+	{
+		if (folder == null)
+			folder = DEFAULT_FOLDER;
+		return folder + '/' + file;
+	}
 
 	inline public static function getAllScripts(folders:String = "data", ?extension:String = ".hxs")
 	{
@@ -26,16 +37,13 @@ class Paths
 			}
 		}
 	}
-	public static function getFile(key:String, defaultFolders:String = "assets/")
+	static public function file(file:String, folder:String = DEFAULT_FOLDER):String
 	{
-		if (key != null)
-		{
-			if (FileSystem.exists(key))
-			{
-				return key;
-			}
-		}
-		return defaultFolders + key;
+		trace(folder + file);
+		/*return File.getContent(defaultFolders + key);*/
+		if (#if sys FileSystem.exists(folder) && #end (folder != null && folder != DEFAULT_FOLDER))
+			return getPath(folder, file);
+		return getPath(null, file);
 	}
 
 	public static function image(path:String, folders:String = "assets/images/"):FlxGraphic
@@ -70,6 +78,10 @@ class Paths
 			trace(e.message);
 			return null;
 		}
+	}
+	public static function getSparrowAtlas(name:String):FlxAtlasFrames
+	{
+		return FlxAtlasFrames.fromSparrow(image(name + ".png"), File.getContent(file(name + ".xml", "assets/images/")));
 	}
 
 	public static function sounds(path:String, folders:String = "assets/sounds/"):Sound

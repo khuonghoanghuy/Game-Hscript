@@ -1,11 +1,11 @@
 package;
 
 import flixel.*;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import hscript.*;
-import openfl.Assets;
 import sys.io.File;
 
 class GameScript extends FlxBasic
@@ -26,6 +26,7 @@ class GameScript extends FlxBasic
 		setVariable("FlxText", FlxText);
 		setVariable("FlxTween", FlxTween);
 		setVariable("FlxEase", FlxEase);
+		setVariable("FlxAtlasFrames", FlxAtlasFrames);
 		setVariable("Paths", Paths);
 
 		setVariable("setCode", PlayState.instance.setCode);
