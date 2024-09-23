@@ -1,0 +1,26 @@
+var cube;
+
+function onCreate() {
+    var bg = new FlxSprite();
+    bg.makeGraphic(FlxG.height * 100, FlxG.height * 100);
+    add(bg);
+
+    cube = new FlxSprite(0, 0);
+    cube.makeGraphic(16, 16, 0xFFFFFFFF);
+    add(cube);
+}
+
+function onUpdate() {
+    if (FlxG.keys.pressed.LEFT) {
+        cube.x -= 15;
+    }
+    if (FlxG.keys.pressed.RIGHT) {
+        cube.x += 15;
+    }
+    if (FlxG.keys.pressed.UP) {
+        cube.y -= 15;
+    }
+    if (FlxG.keys.pressed.DOWN) {
+        cube.y += 15;
+    }
+}
