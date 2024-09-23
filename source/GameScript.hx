@@ -2,10 +2,12 @@ package;
 
 import flixel.*;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import hscript.*;
+import openfl.Lib;
 import sys.io.File;
 
 class GameScript extends FlxBasic
@@ -21,14 +23,28 @@ class GameScript extends FlxBasic
 		super();
 		parser.allowJSON = parser.allowTypes = parser.allowMetadata = true;
 
+		// Haxe Classes
+		setVariable("Math", Math);
+		setVariable("Reflect", Reflect);
+
+		// Flixel Classes
+		setVariable("FlxMath", FlxMath);
 		setVariable("FlxG", FlxG);
 		setVariable("FlxSprite", FlxSprite);
 		setVariable("FlxText", FlxText);
 		setVariable("FlxTween", FlxTween);
 		setVariable("FlxEase", FlxEase);
 		setVariable("FlxAtlasFrames", FlxAtlasFrames);
+		setVariable("FlxCamera", FlxCamera);
+		setVariable("FlxObject", FlxObject);
+
+		// OpenFL Classes
+		setVariable("Lib", Lib);
+
+		// Engine Classes
 		setVariable("Paths", Paths);
 
+		// Engine Function
 		setVariable("setCode", function(name:String, codeSet:Dynamic)
 		{
 			PlayState.instance.storeCode.set(name, codeSet);
@@ -42,6 +58,7 @@ class GameScript extends FlxBasic
 			PlayState.instance.storeCode.remove(name);
 		});
 
+		// Engine Special One
 		setVariable("quickKey", QuickKey.instance);
 		setVariable("quickChange", QuickChange.instance);
 		setVariable("game", PlayState.instance);

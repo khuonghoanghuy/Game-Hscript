@@ -16,17 +16,11 @@ class Paths
 	public static var currentTrackerGraphic:Map<String, FlxGraphic> = [];
 	public static var currentTrackerSounds:Map<String, Sound> = [];
 	public static var currentTrackerFile:Map<String, String> = [];
-	inline public static final DEFAULT_FOLDER:String = 'assets';
-
-	static public function getPath(folder:Null<String>, file:String)
-	{
-		if (folder == null)
-			folder = DEFAULT_FOLDER;
-		return folder + '/' + file;
-	}
+	public static var DEFAULT_FOLDER:String = File.getContent("systemContent/pathsToDefault.txt");
 
 	inline public static function getAllScripts(folders:String = "data", ?extension:String = ".hxs")
 	{
+		folders = DEFAULT_FOLDER + "data/";
 		var folderToRead = FileSystem.readDirectory(folders);
 		for (file in folderToRead)
 		{
@@ -37,26 +31,18 @@ class Paths
 			}
 		}
 	}
-	static public function file(file:String, folder:String = DEFAULT_FOLDER):String
+	static public function file(file:String, folder:String = "assets/"):String
 	{
-		trace(folder + file);
-		/*return File.getContent(defaultFolders + key);*/
-		if (#if sys FileSystem.exists(folder) && #end (folder != null && folder != DEFAULT_FOLDER))
-			return getPath(folder, file);
-		return getPath(null, file);
+		// folder = DEFAULT_FOLDER; // for sumthing
+		trace(DEFAULT_FOLDER + folder + file);
+		if (FileSystem.exists(DEFAULT_FOLDER + folder) && (folder != null && folder != DEFAULT_FOLDER + folder))
+			return DEFAULT_FOLDER + folder + file;
+		return "assets/" + folder + file;
 	}
 
-	public static function image(path:String, folders:String = "assets/images/"):FlxGraphic
+	public static function image(path:String):FlxGraphic
 	{
-		var fileKey:String = folders + path;
-		if (!fileKey.endsWith(".png"))
-		{
-			fileKey = folders + path + ".png";
-		}
-		else
-		{
-			fileKey = folders + path;
-		}
+		var fileKey:String = file(path + ".png", "images/");
 
 		try
 		{
@@ -81,20 +67,35 @@ class Paths
 	}
 	public static function getSparrowAtlas(name:String):FlxAtlasFrames
 	{
-		return FlxAtlasFrames.fromSparrow(image(name + ".png"), File.getContent(file(name + ".xml", "assets/images/")));
+		return FlxAtlasFrames.fromSparrow(image(name), File.getContent(file(name + ".xml", "images/")));
 	}
 
-	public static function sounds(path:String, folders:String = "assets/sounds/"):Sound
+	public static function sounds(path:String):Sound
 	{
-		var fileKey:String = folders + path;
-		if (!fileKey.endsWith(".ogg"))
+		var fileKey:String = file(path + ".ogg", "sounds/");
+
+		try
 		{
-			fileKey = folders + path + ".ogg";
+			if (FileSystem.exists(fileKey))
+			{
+				if (!currentTrackerSounds.exists(fileKey))
+				{
+					currentTrackerSounds.set(fileKey, Sound.fromFile(fileKey));
+				}
+				return currentTrackerSounds.get(fileKey);
+			}
+			return currentTrackerSounds.get(fileKey);
 		}
-		else
+		catch (e)
 		{
-			fileKey = folders + path;
+			trace(e.message);
+			return null;
 		}
+	}
+
+	public static function music(path:String):Sound
+	{
+		var fileKey:String = file(path + ".ogg", "music/");
 
 		try
 		{

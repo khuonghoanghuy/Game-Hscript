@@ -20,12 +20,10 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		Paths.getAllScripts("assets/data/");
+		Paths.getAllScripts();
 		callOnScripts("onCreate", []);
 		super.create();
 		callOnScripts("onCreatePost", []);
-		// Paths.getAllScripts("assets/data/");
-		// storeCode.set("enableThing", function() {});
 		trace(storeCode.toString());
 	}
 
@@ -51,7 +49,7 @@ class PlayState extends FlxState
 
 	public function playMusic(name:String, outLoud:Float = 1, looped:Bool = false)
 	{
-		return FlxG.sound.playMusic(Paths.sounds(name, "assets/music/"), outLoud, looped);
+		return FlxG.sound.playMusic(Paths.music(name), outLoud, looped);
 	}
 
 	/*public function getCode(name:String, ?execute:Bool = true)
