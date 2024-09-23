@@ -8,3 +8,8 @@ look at `assets` folders, is the main folders to allow you making a simple game 
 - the sprite is auto being clone idk why: (NOT FIXED YET)
 > btw you can fix this by add the bg behind this
 - `removeCode`, `setCode`, `getCode` is not working: (NOT FIXED YET)
+
+# folders for working
+- `assets/data/` is only for stored `.hxs` file
+- `assets/images/` is can be stored `.png` and `.xml` if wanna using `Paths.getSparrowAtlas`
+- `assets/sounds/` and `assets/music/` is only stored `.ogg` file (may can be also stored `.wav`, `.mp3`,... in the future)
