@@ -54,7 +54,7 @@ class PlayState extends FlxState
 		return FlxG.sound.playMusic(Paths.sounds(name, "assets/music/"), outLoud, looped);
 	}
 
-	public function getCode(name:String)
+	/*public function getCode(name:String, ?execute:Bool = true)
 	{
 		return storeCode.get(name);
 	}
@@ -62,7 +62,7 @@ class PlayState extends FlxState
 	public function setCode(name:String, code:Dynamic)
 	{
 		return storeCode.set(name, code);
-	}
+	}*/
 
 	public function addMulti(basic:Array<FlxBasic>)
 	{

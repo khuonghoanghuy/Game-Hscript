@@ -29,8 +29,18 @@ class GameScript extends FlxBasic
 		setVariable("FlxAtlasFrames", FlxAtlasFrames);
 		setVariable("Paths", Paths);
 
-		setVariable("setCode", PlayState.instance.setCode);
-		setVariable("getCode", PlayState.instance.getCode);
+		setVariable("setCode", function(name:String, codeSet:Dynamic)
+		{
+			PlayState.instance.storeCode.set(name, codeSet);
+		});
+		setVariable("getCode", function(name:String, executeNow:Bool = true)
+		{
+			this.executeCode(PlayState.instance.storeCode.get(name));
+		});
+		setVariable("removeCode", function(name:String)
+		{
+			PlayState.instance.storeCode.remove(name);
+		});
 
 		setVariable("quickKey", QuickKey.instance);
 		setVariable("quickChange", QuickChange.instance);
@@ -43,6 +53,22 @@ class GameScript extends FlxBasic
 
 		if (execute)
 			this.execute(file);
+	}
+
+	public function executeCode(stringDa:String):Void
+	{
+		try
+		{
+			interp.execute(parser.parseString(stringDa));
+		}
+		catch (e)
+		{
+			#if hl
+			trace("execute error!\n" + e);
+			#else
+			Lib.application.window.alert(e, 'Hscript Error!');
+			#end
+		}
 	}
 
 	public function execute(file:String, ?executeCreate:Bool = true):Void
