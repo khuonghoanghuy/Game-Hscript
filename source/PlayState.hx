@@ -31,9 +31,9 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		callOnScripts("onUpdate", []);
+		callOnScripts("onUpdate", [elapsed]);
 		super.update(elapsed);
-		callOnScripts("onUpdatePost", []);
+		callOnScripts("onUpdatePost", [elapsed]);
 	}
 
 	override function destroy()
