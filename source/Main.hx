@@ -1,12 +1,13 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-	public static var versionEngine:String = "v0.1.0";
+	public static var versionEngine:String = "v" + FlxG.stage.application.meta.get("version");
 	public static var fpsCounter:FPS;
 
 	public function new()
