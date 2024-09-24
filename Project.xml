@@ -43,6 +43,8 @@
 	<haxelib name="flixel-ui" />
 	
 	<haxelib name="hscript" />
+	<haxelib name="linc_lua" if="cpp" />
+	<haxelib name="hxvm-lua" if="cpp" />
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->
