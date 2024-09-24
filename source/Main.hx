@@ -7,7 +7,7 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-	public static var versionEngine:String = #if !hl "v" + FlxG.stage.application.meta.get("version") #else "v0.1.0" #end;
+	public static var versionEngine:String = #if !hl "v" + FlxG.stage.application.meta.get("version") #else "v0.1.1" #end;
 	public static var fpsCounter:FPS;
 
 	public function new()

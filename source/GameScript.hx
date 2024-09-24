@@ -60,6 +60,7 @@ class GameScript extends FlxBasic
 
 		// Engine Special One
 		setVariable("quickKey", QuickKey.instance);
+		setVariable("getKey", QuickKey.ListKey.getKey);
 		setVariable("quickChange", QuickChange.instance);
 		setVariable("game", PlayState.instance);
 		setVariable("add", PlayState.instance.add);
@@ -83,7 +84,7 @@ class GameScript extends FlxBasic
 			#if hl
 			trace("execute error!\n" + e);
 			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
+			Lib.application.window.alert(e.message, 'Hscript Error!');
 			#end
 		}
 	}

@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Game Hscript" file="game" main="Main" version="0.1.0" company="Huy1234TH" />
+	<app title="Game Hscript" file="game" main="Main" version="0.1.1" company="Huy1234TH" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -45,6 +45,7 @@
 	<haxelib name="hscript" />
 	<haxelib name="linc_lua" if="cpp" />
 	<haxelib name="hxvm-lua" if="cpp" />
+	<haxelib name="hxcpp" if="cpp" /> <!-- just make sure-->
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->
@@ -91,5 +92,5 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
-	<define name="hscriptPos" />
+	<haxedef name="hscriptPos" />
 </project>

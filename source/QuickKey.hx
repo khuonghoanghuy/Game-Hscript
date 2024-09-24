@@ -10,6 +10,7 @@ class QuickKey
 	public function new()
 	{
 		instance = this;
+		ListKey.initKey();
 	}
 
 	public function press(key:FlxKey)
@@ -29,4 +30,37 @@ class QuickKey
 
 	public function anyJustRelease(key:Array<FlxKey>)
 		return FlxG.keys.anyJustReleased(key);
+}
+class ListKey
+{
+	public static var keyMap:Map<String, FlxKey> = [];
+
+	public static function initKey()
+	{
+		// alphabet
+		setKey("A", A);
+		setKey("B", B);
+		setKey("C", C);
+		setKey("D", D);
+		setKey("E", E);
+		setKey("F", F);
+
+		// number
+
+		// fkey
+
+		// speical key
+
+		trace(keyMap.toString());
+	}
+
+	public static function setKey(key:String, keyCode:FlxKey)
+	{
+		return keyMap.set(key, keyCode);
+	}
+
+	public static function getKey(key:String)
+	{
+		return keyMap.get(key);
+	}
 }
