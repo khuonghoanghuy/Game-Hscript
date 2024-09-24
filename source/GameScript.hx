@@ -44,8 +44,8 @@ class GameScript extends FlxBasic
 		// Engine Classes
 		setVariable("Paths", Paths);
 
-		// Engine Function
-		setVariable("setCode", function(name:String, codeSet:Dynamic)
+		// Engine Function (Nah, is not working, poor thing)
+		setVariable("setCode", function(name:String, codeSet:String)
 		{
 			PlayState.instance.storeCode.set(name, codeSet);
 		});

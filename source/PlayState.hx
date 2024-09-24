@@ -9,7 +9,7 @@ class PlayState extends FlxState
 {
 	static public var ayoScripts:Array<GameScript> = [];
 	static public var instance:PlayState = null;
-	public var storeCode:Map<String, Dynamic> = [];
+	public var storeCode:Map<String, String> = []; // hmm
 
 	public function new()
 	{
