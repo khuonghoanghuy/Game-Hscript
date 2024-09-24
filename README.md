@@ -7,7 +7,7 @@ look at `assets` folders, is the main folders to allow you making a simple game 
 # known issues being found
 - the sprite is auto being clone idk why: (NOT FIXED YET)
 > btw you can fix this by add the bg behind this
-- `removeCode`, `setCode`, `getCode` is not working: (NOT FIXED YET)
+- `removeCode`, `setCode`, `getCode` is not working: (BEING REPLACE)
 
 # folders for working
 [Read Here](/DefaultFolderWorking.md)
