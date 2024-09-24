@@ -1,0 +1,5 @@
+function onCreate() {
+    import("flixel.FlxG");
+
+    FlxG.resizeWindow(300, 300);
+}

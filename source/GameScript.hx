@@ -2,13 +2,18 @@ package;
 
 import flixel.*;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import haxe.Json;
 import hscript.*;
 import openfl.Lib;
 import sys.io.File;
+
+using StringTools;
 
 class GameScript extends FlxBasic
 {
@@ -26,6 +31,8 @@ class GameScript extends FlxBasic
 		// Haxe Classes
 		setVariable("Math", Math);
 		setVariable("Reflect", Reflect);
+		setVariable("Json", Json);
+		setVariable("Std", Std);
 
 		// Flixel Classes
 		setVariable("FlxMath", FlxMath);
@@ -37,6 +44,8 @@ class GameScript extends FlxBasic
 		setVariable("FlxAtlasFrames", FlxAtlasFrames);
 		setVariable("FlxCamera", FlxCamera);
 		setVariable("FlxObject", FlxObject);
+		setVariable("FlxTypedGroup", FlxTypedGroup);
+		setVariable("FlxGroup", FlxGroup);
 
 		// OpenFL Classes
 		setVariable("Lib", Lib);
@@ -68,6 +77,45 @@ class GameScript extends FlxBasic
 		setVariable("insert", PlayState.instance.insert);
 		setVariable("addMulti", PlayState.instance.addMulti);
 		setVariable("removeMulti", PlayState.instance.removeMulti);
+
+		// Haxe Function
+		setVariable('trace', function(value:Dynamic)
+		{
+			trace(value);
+		});
+
+		// Joalor64GH Code
+		setVariable('import', function(daClass:String, ?asDa:String)
+		{
+			final splitClassName:Array<String> = [for (e in daClass.split('.')) e.trim()];
+			final className:String = splitClassName.join('.');
+			final daClass:Class<Dynamic> = Type.resolveClass(className);
+			final daEnum:Enum<Dynamic> = Type.resolveEnum(className);
+
+			if (daClass == null && daEnum == null)
+				Lib.application.window.alert('Class / Enum at $className does not exist.', 'Hscript Error!');
+			else
+			{
+				if (daEnum != null)
+				{
+					var daEnumField = {};
+					for (daConstructor in daEnum.getConstructors())
+						Reflect.setField(daEnumField, daConstructor, daEnum.createByName(daConstructor));
+
+					if (asDa != null && asDa != '')
+						setVariable(asDa, daEnumField);
+					else
+						setVariable(splitClassName[splitClassName.length - 1], daEnumField);
+				}
+				else
+				{
+					if (asDa != null && asDa != '')
+						setVariable(asDa, daClass);
+					else
+						setVariable(splitClassName[splitClassName.length - 1], daClass);
+				}
+			}
+		});
 
 		if (execute)
 			this.execute(file);

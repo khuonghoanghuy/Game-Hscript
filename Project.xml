@@ -45,7 +45,6 @@
 	<haxelib name="hscript" />
 	<haxelib name="linc_lua" if="cpp" />
 	<haxelib name="hxvm-lua" if="cpp" />
-	<haxelib name="hxcpp" if="cpp" /> <!-- just make sure-->
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->

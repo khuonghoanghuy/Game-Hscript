@@ -5,7 +5,7 @@ import flixel.FlxBasic;
 import sys.io.File;
 import vm.lua.Lua;
 
-// im don't sure is working tho?
+// im not sure is working tho?
 class LuaScript extends FlxBasic
 {
 	public static var lua:Lua;
