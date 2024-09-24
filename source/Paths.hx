@@ -13,18 +13,21 @@ using StringTools;
 
 class Paths
 {
+	// Current Tracker File
 	public static var currentTrackerGraphic:Map<String, FlxGraphic> = [];
 	public static var currentTrackerSounds:Map<String, Sound> = [];
 	public static var currentTrackerFile:Map<String, String> = [];
+	// Current Set Default
 	public static var DEFAULT_FOLDER:String = File.getContent("systemContent/pathsToDefault.txt");
+	public static var DEFAULT_SCRIPT_EXTENSION:String = File.getContent("systemContent/changeExtensionOfHscript.txt");
 
-	inline public static function getAllScripts(folders:String = "data", ?extension:String = ".hxs")
+	inline public static function getAllScripts(folders:String = "data")
 	{
 		folders = DEFAULT_FOLDER + "data/";
 		var folderToRead = FileSystem.readDirectory(folders);
 		for (file in folderToRead)
 		{
-			if (file.endsWith(extension))
+			if (file.endsWith(DEFAULT_SCRIPT_EXTENSION))
 			{
 				var scriptPath = Path.join([folders, file]);
 				PlayState.ayoScripts.push(new GameScript(scriptPath));
