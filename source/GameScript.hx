@@ -8,6 +8,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
 import haxe.Json;
 import hscript.*;
 import openfl.Lib;
@@ -46,12 +47,14 @@ class GameScript extends FlxBasic
 		setVariable("FlxObject", FlxObject);
 		setVariable("FlxTypedGroup", FlxTypedGroup);
 		setVariable("FlxGroup", FlxGroup);
+		setVariable("FlxBar", FlxBar);
 
 		// OpenFL Classes
 		setVariable("Lib", Lib);
 
 		// Engine Classes
 		setVariable("Paths", Paths);
+		setVariable("FlxColor", ColorScript);
 
 		// Engine Function (Nah, is not working, poor thing)
 		setVariable("setCode", function(name:String, codeSet:String)
@@ -83,6 +86,7 @@ class GameScript extends FlxBasic
 		{
 			trace(value);
 		});
+		setVariable("this", this);
 
 		// Joalor64GH Code
 		setVariable('import', function(daClass:String, ?asDa:String)
@@ -143,13 +147,9 @@ class GameScript extends FlxBasic
 		{
 			interp.execute(parser.parseString(File.getContent(file)));
 		}
-		catch (e:Dynamic)
+		catch (e)
 		{
-			#if hl
-			trace("File name" + file + " - execute error!\n" + e);
-			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
-			#end
+			executeError(e.message);
 		}
 
 		trace('Script Loaded Succesfully: $file');
@@ -167,13 +167,9 @@ class GameScript extends FlxBasic
 		{
 			interp.variables.set(name, val);
 		}
-		catch (e:Dynamic)
+		catch (e)
 		{
-			#if hl
-			trace("set variable error!\n" + e);
-			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
-			#end
+			executeError(e.message);
 		}
 	}
 
@@ -186,13 +182,9 @@ class GameScript extends FlxBasic
 		{
 			return interp.variables.get(name);
 		}
-		catch (e:Dynamic)
+		catch (e)
 		{
-			#if hl
-			trace("get variable error!\n" + e);
-			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
-			#end
+			executeError(e.message);
 		}
 
 		return null;
@@ -207,13 +199,9 @@ class GameScript extends FlxBasic
 		{
 			interp.variables.remove(name);
 		}
-		catch (e:Dynamic)
+		catch (e)
 		{
-			#if hl
-			trace("remove variable error!\n" + e);
-			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
-			#end
+			executeError(e.message);
 		}
 	}
 
@@ -226,13 +214,9 @@ class GameScript extends FlxBasic
 		{
 			return interp.variables.exists(name);
 		}
-		catch (e:Dynamic)
+		catch (e)
 		{
-			#if hl
-			trace("exits variable error!\n" + e);
-			#else
-			Lib.application.window.alert(e, 'Hscript Error!');
-			#end
+			executeError(e.message);
 		}
 		return false;
 	}
@@ -248,13 +232,9 @@ class GameScript extends FlxBasic
 			{
 				return Reflect.callMethod(this, getVariable(funcName), args == null ? [] : args);
 			}
-			catch (e:Dynamic)
+			catch (e)
 			{
-				#if hl
-				trace("execute function error!\n" + e);
-				#else
-				Lib.application.window.alert(e, 'Hscript Error!');
-				#end
+				executeError(e.message);
 			}
 		}
 
@@ -265,5 +245,12 @@ class GameScript extends FlxBasic
 		super.destroy();
 		parser = null;
 		interp = null;
+	}
+	function executeError(errorText:String, ?title:String = "Error!")
+	{
+		Lib.application.window.alert(errorText, title);
+		FlxG.log.clear();
+		FlxG.log.error(title + " Hscript Code\n" + errorText);
+		trace(title + " Hscript Code\n" + errorText);
 	}
 }

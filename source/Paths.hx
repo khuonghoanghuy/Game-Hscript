@@ -17,9 +17,10 @@ class Paths
 	public static var currentTrackerGraphic:Map<String, FlxGraphic> = [];
 	public static var currentTrackerSounds:Map<String, Sound> = [];
 	public static var currentTrackerFile:Map<String, String> = [];
+	public static var currentTrackerFont:Map<String, String> = [];
 	// Current Set Default
 	public static var DEFAULT_FOLDER:String = File.getContent("systemContent/pathsToDefault.txt");
-	public static var DEFAULT_SCRIPT_EXTENSION:String = File.getContent("systemContent/changeExtensionOfHscript.txt");
+	public static var DEFAULT_SCRIPT_EXTENSION:String = File.getContent("systemContent/hscriptExt.txt");
 
 	inline public static function getAllScripts(folders:String = "data")
 	{
@@ -111,6 +112,27 @@ class Paths
 				return currentTrackerSounds.get(fileKey);
 			}
 			return currentTrackerSounds.get(fileKey);
+		}
+		catch (e)
+		{
+			trace(e.message);
+			return null;
+		}
+	}
+	public static function font(path:String):String
+	{
+		var fileKey = file(path, "fonts/");
+		try
+		{
+			if (FileSystem.exists(fileKey))
+			{
+				if (!currentTrackerFont.exists(fileKey))
+				{
+					currentTrackerFont.set(fileKey, fileKey);
+				}
+				return currentTrackerFont.get(fileKey);
+			}
+			return currentTrackerFont.get(fileKey);
 		}
 		catch (e)
 		{
