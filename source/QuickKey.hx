@@ -48,6 +48,7 @@ class ListKey
 		// number
 
 		// fkey
+		setKey("F1", F1);
 
 		// speical key
 

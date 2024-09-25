@@ -5,6 +5,8 @@ You can actual edit the `systemContent/pathsToDefault.txt` from `assets/` to `<a
 ## Extension
 ### Data
 - From the release, this folder will only contains `.hxs` file
+### Fonts
+- This one can added some font you want, is not ask for extension tho
 ### Images
 - This folder contains `.png`, put `.xml` into this folder if you wanna load a sprite sheet
 ### Sounds, Music
