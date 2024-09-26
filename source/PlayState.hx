@@ -9,22 +9,21 @@ class PlayState extends FlxState
 {
 	static public var ayoScripts:Array<GameScript> = [];
 	static public var instance:PlayState = null;
-	public var storeCode:Map<String, String> = []; // hmm
 
 	public function new()
 	{
 		super();
 		instance = this;
+		Paths.getAllScripts();
+		
 		callOnScripts("onNew", []);
 	}
 
 	override public function create()
 	{
-		Paths.getAllScripts();
 		callOnScripts("onCreate", []);
 		super.create();
 		callOnScripts("onCreatePost", []);
-		trace(storeCode.toString());
 	}
 
 	override public function update(elapsed:Float)
@@ -51,16 +50,6 @@ class PlayState extends FlxState
 	{
 		return FlxG.sound.playMusic(Paths.music(name), outLoud, looped);
 	}
-
-	/*public function getCode(name:String, ?execute:Bool = true)
-	{
-		return storeCode.get(name);
-	}
-
-	public function setCode(name:String, code:Dynamic)
-	{
-		return storeCode.set(name, code);
-	}*/
 
 	public function addMulti(basic:Array<FlxBasic>)
 	{

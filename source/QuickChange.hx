@@ -19,10 +19,4 @@ class QuickChange
 		FlxG.drawFramerate = draw;
 		FlxG.updateFramerate = update;
 	}
-
-	public function addFPSCounter()
-		FlxG.stage.addChild(Main.fpsCounter);
-
-	public function removeFPSCounter()
-		FlxG.stage.removeChild(Main.fpsCounter);
 }

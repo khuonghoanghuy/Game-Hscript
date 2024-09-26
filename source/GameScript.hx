@@ -56,23 +56,7 @@ class GameScript extends FlxBasic
 		setVariable("Paths", Paths);
 		setVariable("FlxColor", ColorScript);
 
-		// Engine Function (Nah, is not working, poor thing)
-		setVariable("setCode", function(name:String, codeSet:String)
-		{
-			PlayState.instance.storeCode.set(name, codeSet);
-		});
-		setVariable("getCode", function(name:String, executeNow:Bool = true)
-		{
-			this.executeCode(PlayState.instance.storeCode.get(name));
-		});
-		setVariable("removeCode", function(name:String)
-		{
-			PlayState.instance.storeCode.remove(name);
-		});
-
 		// Engine Special One
-		setVariable("quickKey", QuickKey.instance);
-		setVariable("getKey", QuickKey.ListKey.getKey);
 		setVariable("quickChange", QuickChange.instance);
 		setVariable("game", PlayState.instance);
 		setVariable("add", PlayState.instance.add);
@@ -249,8 +233,6 @@ class GameScript extends FlxBasic
 	function executeError(errorText:String, ?title:String = "Error!")
 	{
 		Lib.application.window.alert(errorText, title);
-		FlxG.log.clear();
-		FlxG.log.error(title + " Hscript Code\n" + errorText);
 		trace(title + " Hscript Code\n" + errorText);
 	}
 }
