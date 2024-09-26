@@ -2,20 +2,26 @@ package;
 
 import flixel.FlxBasic;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.sound.FlxSound;
 
 class PlayState extends FlxState
 {
 	static public var ayoScripts:Array<GameScript> = [];
+	static public var luaScripts:Array<LuaScript> = [];
 	static public var instance:PlayState = null;
+
+	// Lua stuff only
+	static public var images:Map<String, FlxSprite> = new Map<String, FlxSprite>();
+	static public var object:Map<String, FlxBasic> = new Map<String, FlxBasic>();
 
 	public function new()
 	{
 		super();
 		instance = this;
 		Paths.getAllScripts();
-		
+
 		callOnScripts("onNew", []);
 	}
 

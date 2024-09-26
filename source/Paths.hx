@@ -34,6 +34,14 @@ class Paths
 				PlayState.ayoScripts.push(new GameScript(scriptPath));
 			}
 		}
+		for (file in folderToRead)
+		{
+			if (file.endsWith(".lua"))
+			{
+				var scriptPath = Path.join([folders, file]);
+				PlayState.luaScripts.push(new LuaScript(scriptPath));
+			}
+		}
 	}
 	static public function file(file:String, folder:String = "assets/"):String
 	{
