@@ -147,6 +147,31 @@ class LuaScript extends FlxBasic
 				PlayState.luaImages.set(tag, sprite);
 			}
 		});
+		add_callback("makeAnimationSprite", function(tag:String, x:Float, y:Float, ?paths:String = null)
+		{
+			if (!PlayState.luaImages.exists(tag))
+			{
+				var sprite = new FlxSprite(x, y);
+				sprite.frames = Paths.getSparrowAtlas(paths);
+				PlayState.luaImages.set(tag, sprite);
+			}
+		});
+		add_callback("addAnimationByPrefix", function(tag:String, name:String, prefix:String, fps:Int = 24, looped:Bool = false)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				var sprite = PlayState.luaImages.get(tag);
+				return sprite.animation.addByPrefix(name, prefix, fps, looped);
+			}
+		});
+		add_callback("playAnimation", function(tag:String, name:String, force:Bool = false, rev:Bool = false, frames:Int = 0)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				var sprite = PlayState.luaImages.get(tag);
+				return sprite.animation.play(name, force, rev, frames);
+			}
+		});
 		add_callback("setSpriteProperty", function(tag:String, property:String, value:Dynamic)
 		{
 			if (PlayState.luaImages.exists(tag))
