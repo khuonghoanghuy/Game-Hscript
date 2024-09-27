@@ -11,3 +11,6 @@ look at `assets` folders, is the main folders to allow you making a simple game 
 
 # folders for working
 [Read Here](/DefaultFolderWorking.md)
+
+# Template Code
+You can see from this [repo](https://github.com/khuonghoanghuy/Game-Hscript-Template)
