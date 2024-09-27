@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.sound.FlxSound;
+import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
@@ -13,8 +14,8 @@ class PlayState extends FlxState
 	static public var instance:PlayState = null;
 
 	// Lua stuff only
-	static public var images:Map<String, FlxSprite> = new Map<String, FlxSprite>();
-	static public var object:Map<String, FlxBasic> = new Map<String, FlxBasic>();
+	static public var luaImages:Map<String, FlxSprite> = new Map<String, FlxSprite>();
+	static public var luaText:Map<String, FlxText> = new Map<String, FlxText>();
 
 	public function new()
 	{
@@ -83,6 +84,15 @@ class PlayState extends FlxState
 			final bool:Bool = call == GameScript.Function_Continue;
 			if (!bool && call != null)
 				value = call;
+		}
+
+		for (i in 0...luaScripts.length)
+		{
+			var ret:Dynamic = luaScripts[i].call(funcName, args);
+			if (ret != LuaScript.Function_Continue)
+			{
+				value = ret;
+			}
 		}
 
 		return value;

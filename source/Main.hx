@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
+import sys.io.File;
 
 class Main extends Sprite
 {
@@ -12,6 +13,18 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, PlayState, 60, 60, false));
+		addChild(new FlxGame(0, 0, PlayState, 60, 60, toggleSplashScreen()));
+	}
+
+	function toggleSplashScreen():Bool
+	{
+		if (File.getContent("systemContent/allowSplashScreen.txt") == "true")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

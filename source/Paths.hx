@@ -38,8 +38,7 @@ class Paths
 		{
 			if (file.endsWith(".lua"))
 			{
-				var scriptPath = Path.join([folders, file]);
-				PlayState.luaScripts.push(new LuaScript(scriptPath));
+				PlayState.luaScripts.push(new LuaScript(folders + file));
 			}
 		}
 	}

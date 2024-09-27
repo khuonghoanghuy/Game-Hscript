@@ -41,8 +41,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	<haxelib name="hscript" />
-	<haxelib name="linc_lua" if="cpp" />
-	<haxelib name="hxvm-lua" if="cpp" />
+	<haxelib name="linc_luajit" if="cpp" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
