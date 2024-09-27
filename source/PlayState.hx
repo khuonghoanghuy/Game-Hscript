@@ -45,6 +45,7 @@ class PlayState extends FlxState
 		callOnScripts("onDestroy", []);
 		super.destroy();
 		ayoScripts = [];
+		luaScripts = [];
 	}
 
 	// custom function

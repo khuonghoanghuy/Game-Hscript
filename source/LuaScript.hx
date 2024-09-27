@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxBasic;
+import flixel.FlxSprite;
 import flixel.text.FlxText;
 import llua.Convert;
 import llua.Lua.Lua_helper;
@@ -60,9 +61,17 @@ class LuaScript extends FlxBasic
 		{
 			if (PlayState.luaText.exists(tag))
 			{
-				var text:FlxText = PlayState.luaText.get(tag);
-				text.size = size;
+				return PlayState.luaText.get(tag).size = size;
 			}
+			return PlayState.luaText.get(tag).size = size;
+		});
+		add_callback("setTextFont", function(tag:String, font:String)
+		{
+			if (PlayState.luaText.exists(tag))
+			{
+				return PlayState.luaText.get(tag).font = Paths.font(font);
+			}
+			return null;
 		});
 		add_callback("setFormat", function(tag:String, font:String, size:Int, color:Int, reAliAsText:String, reBorAsText:String, borColor:Int)
 		{
@@ -77,6 +86,8 @@ class LuaScript extends FlxBasic
 						reAli = CENTER;
 					case "right":
 						reAli = RIGHT;
+					default:
+						reAli = LEFT;
 				}
 				var reBor:FlxTextBorderStyle;
 				switch (reBorAsText)
@@ -85,9 +96,36 @@ class LuaScript extends FlxBasic
 						reBor = OUTLINE;
 					case "outline_fast":
 						reBor = OUTLINE_FAST;
+					default:
+						reBor = OUTLINE;
 				}
 				PlayState.luaText.get(tag).setFormat(font, size, color, reAli, reBor, borColor);
 			}
+		});
+		add_callback("setTextProperty", function(tag:String, property:String, value:Dynamic)
+		{
+			if (PlayState.luaText.exists(tag))
+			{
+				return Reflect.setProperty(PlayState.luaText.get(tag), property, value);
+			}
+		});
+		add_callback("getTextProperty", function(tag:String, property:String)
+		{
+			var splitDot:Array<String> = property.split('.');
+			var getText:Dynamic = null;
+			if (splitDot.length > 1)
+			{
+				if (PlayState.luaText.exists(splitDot[0]))
+				{
+					getText = PlayState.luaText.get(splitDot[0]);
+				}
+				for (i in 1...splitDot.length - 1)
+				{
+					getText = Reflect.getProperty(getText, splitDot[i]);
+				}
+				return Reflect.getProperty(getText, splitDot[splitDot.length - 1]);
+			}
+			return Reflect.getProperty(getText, splitDot[splitDot.length - 1]);
 		});
 		add_callback("addText", function(tag:String)
 		{
@@ -98,11 +136,82 @@ class LuaScript extends FlxBasic
 			return null;
 		});
 
-		if (execute)
-			this.executeFile(file);
-	}
+		// Sprite Family
+		add_callback("makeSprite", function(tag:String, x:Float, y:Float, ?paths:String = null)
+		{
+			if (!PlayState.luaImages.exists(tag))
+			{
+				var sprite = new FlxSprite(x, y);
+				sprite.loadGraphic(Paths.image(paths));
+				sprite.active = true;
+				PlayState.luaImages.set(tag, sprite);
+			}
+		});
+		add_callback("setSpriteProperty", function(tag:String, property:String, value:Dynamic)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				return Reflect.setProperty(PlayState.luaImages.get(tag), property, value);
+			}
+		});
+		add_callback("getSpriteProperty", function(tag:String, property:String)
+		{
+			var splitDot:Array<String> = property.split('.');
+			var getSprite:Dynamic = null;
+			if (splitDot.length > 1)
+			{
+				if (PlayState.luaImages.exists(splitDot[0]))
+				{
+					getSprite = PlayState.luaImages.get(splitDot[0]);
+				}
+				for (i in 1...splitDot.length - 1)
+				{
+					getSprite = Reflect.getProperty(getSprite, splitDot[i]);
+				}
+				return Reflect.getProperty(getSprite, splitDot[splitDot.length - 1]);
+			}
+			return Reflect.getProperty(getSprite, splitDot[splitDot.length - 1]);
+		});
+		add_callback("addSprite", function(tag:String)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				return PlayState.instance.add(PlayState.luaImages.get(tag));
+			}
+			return null;
+		});
 
-	function executeFile(file) {}
+		// Whole thing
+		add_callback("setPosition", function(tag:String, type:String, x:Float, y:Float)
+		{
+			switch (type)
+			{
+				case "sprite":
+					if (PlayState.luaImages.exists(tag))
+					{
+						PlayState.luaImages.get(tag).setPosition(x, y);
+					}
+				case "text":
+					if (PlayState.luaText.exists(tag))
+					{
+						PlayState.luaText.get(tag).setPosition(x, y);
+					}
+			}
+		});
+
+		// Haxe Runner (idk why)
+		add_callback("runHaxeCode", function(string:String)
+		{
+			var gameHscript:GameScript = new GameScript(null, false);
+			gameHscript.executeCode(string);
+		});
+
+		// Haxe Family
+		add_callback("stdInt", function(x:Float)
+		{
+			return Std.int(x);
+		});
+	}
 
 	function add_callback(name:String, eventToDo:Dynamic)
 		return Lua_helper.add_callback(lua, name, eventToDo);
