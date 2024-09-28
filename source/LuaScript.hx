@@ -108,7 +108,18 @@ class LuaScript extends FlxBasic
 		{
 			if (PlayState.luaText.exists(tag))
 			{
-				return Reflect.setProperty(PlayState.luaText.get(tag), property, value);
+				var text = PlayState.luaText.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(text, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(text, property, value);
+				}
 			}
 		});
 		add_callback("getTextProperty", function(tag:String, property:String)
@@ -177,7 +188,18 @@ class LuaScript extends FlxBasic
 		{
 			if (PlayState.luaImages.exists(tag))
 			{
-				return Reflect.setProperty(PlayState.luaImages.get(tag), property, value);
+				var sprite = PlayState.luaImages.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(sprite, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(sprite, property, value);
+				}
 			}
 		});
 		add_callback("getSpriteProperty", function(tag:String, property:String)
@@ -239,7 +261,18 @@ class LuaScript extends FlxBasic
 		{
 			if (PlayState.luaCamera.exists(tag))
 			{
-				return Reflect.setProperty(PlayState.luaCamera.get(tag), property, value);
+				var camera = PlayState.luaCamera.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(camera, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(camera, property, value);
+				}
 			}
 		});
 		add_callback("getCameraProperty", function(tag:String, property:String)
