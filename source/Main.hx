@@ -16,15 +16,15 @@ class Main extends Sprite
 		addChild(new FlxGame(0, 0, PlayState, 60, 60, toggleSplashScreen()));
 	}
 
-	function toggleSplashScreen():Bool
+	function toggleSplashScreen():Bool // flip
 	{
 		if (File.getContent("systemContent/allowSplashScreen.txt") == "true")
 		{
-			return true;
+			return false;
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}
 }
