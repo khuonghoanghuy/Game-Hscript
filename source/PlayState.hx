@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxBasic;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -18,6 +19,7 @@ class PlayState extends FlxState
 	static public var luaImages:Map<String, FlxSprite> = new Map<String, FlxSprite>();
 	static public var luaText:Map<String, FlxText> = new Map<String, FlxText>();
 	static public var luaSound:Map<String, Sound> = new Map<String, Sound>();
+	static public var luaCamera:Map<String, FlxCamera> = new Map<String, FlxCamera>();
 
 	public function new()
 	{

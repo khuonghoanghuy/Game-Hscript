@@ -1,6 +1,8 @@
 package;
 
 import flixel.FlxBasic;
+import flixel.FlxCamera;
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import llua.Convert;
@@ -213,6 +215,50 @@ class LuaScript extends FlxBasic
 		add_callback("playMusic", function(music:String, loud:Float = 1, looped:Bool = false)
 		{
 			return PlayState.instance.playMusic(music, loud, looped);
+		});
+
+		// Camera Familu
+		add_callback("makeCamera", function(tag:String, x:Float = 0, y:Float = 0, width:Int = 0, height:Int = 0, zoom:Float = 0)
+		{
+			if (!PlayState.luaCamera.exists(tag))
+			{
+				var cam:FlxCamera = new FlxCamera(x, y, width, height, zoom);
+				cam.active = true;
+				PlayState.luaCamera.set(tag, cam);
+			}
+		});
+		add_callback("addCamera", function(tag:String, draw:Bool = false)
+		{
+			if (PlayState.luaCamera.exists(tag))
+			{
+				return FlxG.cameras.add(PlayState.luaCamera.get(tag), draw);
+			}
+			return null;
+		});
+		add_callback("setCameraProperty", function(tag:String, property:String, value:Dynamic)
+		{
+			if (PlayState.luaCamera.exists(tag))
+			{
+				return Reflect.setProperty(PlayState.luaCamera.get(tag), property, value);
+			}
+		});
+		add_callback("getCameraProperty", function(tag:String, property:String)
+		{
+			var splitDot:Array<String> = property.split('.');
+			var getCamera:Dynamic = null;
+			if (splitDot.length > 1)
+			{
+				if (PlayState.luaCamera.exists(splitDot[0]))
+				{
+					getCamera = PlayState.luaCamera.get(splitDot[0]);
+				}
+				for (i in 1...splitDot.length - 1)
+				{
+					getCamera = Reflect.getProperty(getCamera, splitDot[i]);
+				}
+				return Reflect.getProperty(getCamera, splitDot[splitDot.length - 1]);
+			}
+			return Reflect.getProperty(getCamera, splitDot[splitDot.length - 1]);
 		});
 
 		// Whole thing
