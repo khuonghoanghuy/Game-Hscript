@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.sound.FlxSound;
 import flixel.text.FlxText;
+import openfl.media.Sound;
 
 class PlayState extends FlxState
 {
@@ -16,6 +17,7 @@ class PlayState extends FlxState
 	// Lua stuff only
 	static public var luaImages:Map<String, FlxSprite> = new Map<String, FlxSprite>();
 	static public var luaText:Map<String, FlxText> = new Map<String, FlxText>();
+	static public var luaSound:Map<String, Sound> = new Map<String, Sound>();
 
 	public function new()
 	{

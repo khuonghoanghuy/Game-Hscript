@@ -54,6 +54,7 @@ class GameScript extends FlxBasic
 
 		// Engine Classes
 		setVariable("Paths", Paths);
+		setVariable("PlayState", PlayState);
 		setVariable("FlxColor", ColorScript);
 
 		// Engine Special One

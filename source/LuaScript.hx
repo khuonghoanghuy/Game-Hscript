@@ -99,7 +99,7 @@ class LuaScript extends FlxBasic
 					default:
 						reBor = OUTLINE;
 				}
-				PlayState.luaText.get(tag).setFormat(font, size, color, reAli, reBor, borColor);
+				PlayState.luaText.get(tag).setFormat(Paths.font(font), size, color, reAli, reBor, borColor);
 			}
 		});
 		add_callback("setTextProperty", function(tag:String, property:String, value:Dynamic)
@@ -203,6 +203,16 @@ class LuaScript extends FlxBasic
 				return PlayState.instance.add(PlayState.luaImages.get(tag));
 			}
 			return null;
+		});
+
+		// Sound | Music Family
+		add_callback("playSound", function(sound:String, loud:Float = 1, looped:Bool = false)
+		{
+			return PlayState.instance.playSound(sound, loud, looped);
+		});
+		add_callback("playMusic", function(music:String, loud:Float = 1, looped:Bool = false)
+		{
+			return PlayState.instance.playMusic(music, loud, looped);
 		});
 
 		// Whole thing
