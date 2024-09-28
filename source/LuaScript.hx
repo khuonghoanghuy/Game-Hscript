@@ -168,8 +168,7 @@ class LuaScript extends FlxBasic
 		{
 			if (PlayState.luaImages.exists(tag))
 			{
-				var sprite = PlayState.luaImages.get(tag);
-				return sprite.animation.play(name, force, rev, frames);
+				return PlayState.luaImages.get(tag).animation.play(name, force, rev, frames);
 			}
 		});
 		add_callback("setSpriteProperty", function(tag:String, property:String, value:Dynamic)
@@ -222,6 +221,34 @@ class LuaScript extends FlxBasic
 						PlayState.luaText.get(tag).setPosition(x, y);
 					}
 			}
+		});
+		add_callback("getPropertyFromClass", function(classes:String, value:String)
+		{
+			var splitDot:Array<String> = value.split(".");
+			var getClassProperty:Dynamic = Type.resolveClass(classes);
+			if (splitDot.length > 1)
+			{
+				for (i in 1...splitDot.length)
+				{
+					getClassProperty = Reflect.getProperty(getClassProperty, splitDot[i - 1]);
+				}
+				return Reflect.getProperty(getClassProperty, splitDot[splitDot.length - 1]);
+			}
+			return Reflect.getProperty(getClassProperty, value);
+		});
+		add_callback("setPropertyFromClass", function(classes:String, variable:String, value:Dynamic)
+		{
+			var splitDot:Array<String> = variable.split('.');
+			var getClassProperty:Dynamic = Type.resolveClass(classes);
+			if (splitDot.length > 1)
+			{
+				for (i in 1...splitDot.length - 1)
+				{
+					getClassProperty = Reflect.getProperty(getClassProperty, splitDot[i - 1]);
+				}
+				return Reflect.setProperty(getClassProperty, splitDot[splitDot.length - 1], value);
+			}
+			return Reflect.setProperty(getClassProperty, variable, value);
 		});
 
 		// Haxe Runner (idk why)
