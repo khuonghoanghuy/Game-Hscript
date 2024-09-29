@@ -169,6 +169,14 @@ class LuaScript extends FlxBasic
 				PlayState.luaImages.set(tag, sprite);
 			}
 		});
+		add_callback("setSpriteOffset", function(tag:String, x:Float = 0, y:Float = 0)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				return PlayState.luaImages.get(tag).offset.set(x, y);
+			}
+			return null;
+		});
 		add_callback("addAnimationByPrefix", function(tag:String, name:String, prefix:String, fps:Int = 24, looped:Bool = false)
 		{
 			if (PlayState.luaImages.exists(tag))
@@ -178,6 +186,13 @@ class LuaScript extends FlxBasic
 			}
 		});
 		add_callback("playAnimation", function(tag:String, name:String, force:Bool = false, rev:Bool = false, frames:Int = 0)
+		{
+			if (PlayState.luaImages.exists(tag))
+			{
+				return PlayState.luaImages.get(tag).animation.play(name, force, rev, frames);
+			}
+		});
+		add_callback("playAnim", function(tag:String, name:String, force:Bool = false, rev:Bool = false, frames:Int = 0)
 		{
 			if (PlayState.luaImages.exists(tag))
 			{
@@ -295,20 +310,93 @@ class LuaScript extends FlxBasic
 		});
 
 		// Whole thing
-		add_callback("setPosition", function(tag:String, type:String, x:Float, y:Float)
+		add_callback("setPosition", function(tag:String, x:Float, y:Float)
 		{
-			switch (type)
+			if (PlayState.luaCamera.exists(tag))
 			{
-				case "sprite":
-					if (PlayState.luaImages.exists(tag))
-					{
-						PlayState.luaImages.get(tag).setPosition(x, y);
-					}
-				case "text":
-					if (PlayState.luaText.exists(tag))
-					{
-						PlayState.luaText.get(tag).setPosition(x, y);
-					}
+				return PlayState.luaCamera.get(tag).setPosition(x, y);
+			}
+			else if (PlayState.luaImages.exists(tag))
+			{
+				return PlayState.luaImages.get(tag).setPosition(x, y);
+			}
+			else if (PlayState.luaText.exists(tag))
+			{
+				return PlayState.luaText.get(tag).setPosition(x, y);
+			}
+		});
+		add_callback("getProperty", function(tag:String, property:String)
+		{
+			var splitDot:Array<String> = property.split('.');
+			var getData:Dynamic = null;
+			if (splitDot.length > 1)
+			{
+				if (PlayState.luaCamera.exists(splitDot[0]))
+				{
+					getData = PlayState.luaCamera.get(splitDot[0]);
+				}
+				else if (PlayState.luaImages.exists(splitDot[0]))
+				{
+					getData = PlayState.luaImages.get(splitDot[0]);
+				}
+				else if (PlayState.luaText.exists(splitDot[0]))
+				{
+					getData = PlayState.luaText.get(splitDot[0]);
+				}
+				for (i in 1...splitDot.length - 1)
+				{
+					getData = Reflect.getProperty(getData, splitDot[i]);
+				}
+				return Reflect.getProperty(getData, splitDot[splitDot.length - 1]);
+			}
+			return Reflect.getProperty(getData, splitDot[splitDot.length - 1]);
+		});
+		add_callback("setProperty", function(tag:String, property:String, value:Dynamic)
+		{
+			if (PlayState.luaCamera.exists(tag))
+			{
+				var camera = PlayState.luaCamera.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(camera, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(camera, property, value);
+				}
+			}
+			else if (PlayState.luaImages.exists(tag))
+			{
+				var sprite = PlayState.luaImages.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(sprite, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(sprite, property, value);
+				}
+			}
+			else if (PlayState.luaText.exists(tag))
+			{
+				var text = PlayState.luaText.get(tag);
+				var propertyParts:Array<String> = property.split(".");
+				if (propertyParts.length > 1)
+				{
+					var subProperty:String = propertyParts[0];
+					var subValue:String = propertyParts[1];
+					Reflect.setProperty(Reflect.getProperty(text, subProperty), subValue, value);
+				}
+				else
+				{
+					Reflect.setProperty(text, property, value);
+				}
 			}
 		});
 		add_callback("getPropertyFromClass", function(classes:String, value:String)
@@ -338,6 +426,10 @@ class LuaScript extends FlxBasic
 				return Reflect.setProperty(getClassProperty, splitDot[splitDot.length - 1], value);
 			}
 			return Reflect.setProperty(getClassProperty, variable, value);
+		});
+		add_callback("resizeGame", function(width:Int, height:Int)
+		{
+			return FlxG.resizeGame(width, height);
 		});
 
 		// Haxe Runner (idk why)

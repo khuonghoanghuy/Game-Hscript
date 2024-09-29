@@ -19,4 +19,8 @@ class QuickChange
 		FlxG.drawFramerate = draw;
 		FlxG.updateFramerate = update;
 	}
+	public function resizeGame(width:Int, height:Int)
+	{
+		return FlxG.resizeGame(width, height);
+	}
 }
