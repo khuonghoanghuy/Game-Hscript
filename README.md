@@ -14,3 +14,6 @@ look at `assets` folders, is the main folders to allow you making a simple game 
 
 # Template Code
 You can see from this [repo](https://github.com/khuonghoanghuy/Game-Hscript-Template)
+
+# Misc and Stuff
+- [Discord server - Just chat, check update and suggest for improve and stuff for Game-Hscript engine](https://discord.gg/ycGAytcyGk)
