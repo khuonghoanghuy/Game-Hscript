@@ -19,8 +19,8 @@ class Paths
 	public static var currentTrackerFile:Map<String, String> = [];
 	public static var currentTrackerFont:Map<String, String> = [];
 	// Current Set Default
-	public static var DEFAULT_FOLDER:String = File.getContent("systemContent/pathsToDefault.txt");
-	public static var DEFAULT_SCRIPT_EXTENSION:String = File.getContent("systemContent/hscriptExt.txt");
+	public static var DEFAULT_FOLDER:String = Paths.returnContent("systemContent/pathsToDefault.txt");
+	public static var DEFAULT_SCRIPT_EXTENSION:String = Paths.returnContent("systemContent/hscriptExt.txt");
 
 	inline public static function getAllScripts(folders:String = "data")
 	{
@@ -31,7 +31,7 @@ class Paths
 			if (file.endsWith(DEFAULT_SCRIPT_EXTENSION))
 			{
 				var scriptPath = Path.join([folders, file]);
-				PlayState.ayoScripts.push(new GameScript(scriptPath));
+				PlayState.ayoScripts.push(new HScript(scriptPath));
 			}
 		}
 		for (file in folderToRead)
@@ -78,7 +78,7 @@ class Paths
 	}
 	public static function getSparrowAtlas(name:String):FlxAtlasFrames
 	{
-		return FlxAtlasFrames.fromSparrow(image(name), File.getContent(file(name + ".xml", "images/")));
+		return FlxAtlasFrames.fromSparrow(image(name), Paths.returnContent(file(name + ".xml", "images/")));
 	}
 
 	public static function sounds(path:String):Sound
@@ -147,4 +147,6 @@ class Paths
 			return null;
 		}
 	}
+	public static function returnContent(file:String):String
+		return File.getContent(file);
 }

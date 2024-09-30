@@ -308,6 +308,11 @@ class LuaScript extends FlxBasic
 			}
 			return Reflect.getProperty(getCamera, splitDot[splitDot.length - 1]);
 		});
+		add_callback("setBgColor", function(tag:String, color:String)
+		{
+			var colorToDo = color;
+			PlayState.luaCamera.get(tag).bgColor = Std.parseInt(color);
+		});
 
 		// Whole thing
 		add_callback("setPosition", function(tag:String, x:Float, y:Float)
@@ -431,11 +436,27 @@ class LuaScript extends FlxBasic
 		{
 			return FlxG.resizeGame(width, height);
 		});
+		add_callback("setObjectCamera", function(tag:String, camTag:String)
+		{
+			var returnVal:Dynamic = null;
+			var returnCam:Dynamic = PlayState.luaCamera.get(camTag);
+			if (PlayState.luaImages.exists(tag))
+			{
+				returnVal = PlayState.luaImages.get(tag).cameras = [returnCam];
+				return returnVal;
+			}
+			else if (PlayState.luaText.exists(tag))
+			{
+				returnVal = PlayState.luaText.get(tag).cameras = [returnCam];
+				return returnVal;
+			}
+			return returnVal;
+		});
 
 		// Haxe Runner (idk why)
 		add_callback("runHaxeCode", function(string:String)
 		{
-			var gameHscript:GameScript = new GameScript(null, false);
+			var gameHscript:HScript = new HScript(null, false);
 			gameHscript.executeCode(string);
 		});
 

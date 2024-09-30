@@ -11,7 +11,7 @@ import openfl.media.Sound;
 
 class PlayState extends FlxState
 {
-	static public var ayoScripts:Array<GameScript> = [];
+	static public var ayoScripts:Array<HScript> = [];
 	static public var luaScripts:Array<LuaScript> = [];
 	static public var instance:PlayState = null;
 
@@ -23,9 +23,10 @@ class PlayState extends FlxState
 
 	public function new()
 	{
+		Paths.getAllScripts();
+		
 		super();
 		instance = this;
-		Paths.getAllScripts();
 
 		callOnScripts("onNew", []);
 	}
@@ -81,12 +82,12 @@ class PlayState extends FlxState
 
 	private function callOnScripts(funcName:String, args:Array<Dynamic>):Dynamic
 	{
-		var value:Dynamic = GameScript.Function_Continue;
+		var value:Dynamic = LuaScript.Function_Continue;
 
 		for (i in 0...ayoScripts.length)
 		{
 			final call:Dynamic = ayoScripts[i].executeFunc(funcName, args);
-			final bool:Bool = call == GameScript.Function_Continue;
+			final bool:Bool = call == HScript.Function_Continue;
 			if (!bool && call != null)
 				value = call;
 		}

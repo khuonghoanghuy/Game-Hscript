@@ -13,12 +13,15 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, PlayState, 60, 60, toggleSplashScreen()));
+		addChild(new FlxGame(Std.parseInt(Paths.returnContent("systemContent/widthSc.txt")), Std.parseInt(Paths.returnContent("systemContent/heightSc.txt")),
+			PlayState, 60, 60, toggleSplashScreen()));
+		QuickChange.instance.resizeGame(Std.parseInt(Paths.returnContent("systemContent/widthSc.txt")),
+			Std.parseInt(Paths.returnContent("systemContent/heightSc.txt")));
 	}
 
 	function toggleSplashScreen():Bool // flip
 	{
-		if (File.getContent("systemContent/allowSplashScreen.txt") == "true")
+		if (Paths.returnContent("systemContent/allowSplashScreen.txt") == "true")
 		{
 			return false;
 		}

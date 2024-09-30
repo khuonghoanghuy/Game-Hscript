@@ -33,14 +33,13 @@
 	<source path="source" />
 	<assets path="assets" embed="false" />
 	<assets path="systemContent" embed="false" />
-	<assets path="Changelog.md" rename="changelog.txt" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
-	<haxelib name="hscript" />
+	<haxelib name="hscript-improved" />
 	<haxelib name="linc_luajit" if="cpp" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->

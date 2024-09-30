@@ -21,6 +21,8 @@ class QuickChange
 	}
 	public function resizeGame(width:Int, height:Int)
 	{
-		return FlxG.resizeGame(width, height);
+		FlxG.resizeGame(width, height);
+		FlxG.resizeWindow(width, height);
+		FlxG.stage.window.resize(width, height);
 	}
 }

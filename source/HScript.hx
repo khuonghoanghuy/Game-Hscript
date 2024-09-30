@@ -16,7 +16,7 @@ import sys.io.File;
 
 using StringTools;
 
-class GameScript extends FlxBasic
+class HScript extends FlxBasic
 {
 	public static var Function_Stop:Dynamic = 1;
 	public static var Function_Continue:Dynamic = 0;
@@ -130,7 +130,7 @@ class GameScript extends FlxBasic
 	{
 		try
 		{
-			interp.execute(parser.parseString(File.getContent(file)));
+			interp.execute(parser.parseString(Paths.returnContent(file)));
 		}
 		catch (e)
 		{
@@ -225,12 +225,14 @@ class GameScript extends FlxBasic
 
 		return null;
 	}
+
 	override function destroy()
 	{
 		super.destroy();
 		parser = null;
 		interp = null;
 	}
+
 	function executeError(errorText:String, ?title:String = "Error!")
 	{
 		Lib.application.window.alert(errorText, title);
